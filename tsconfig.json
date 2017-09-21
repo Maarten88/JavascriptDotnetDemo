@@ -1,0 +1,11 @@
+{
+    "include": [
+    ],
+    "compilerOptions": {
+        "baseUrl": "./",
+        "allowJs": false,
+        "jsx": "react",
+        "module": "commonjs",
+        "target": "es5"
+    }
+}
