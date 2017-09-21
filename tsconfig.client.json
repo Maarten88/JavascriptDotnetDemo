@@ -1,0 +1,17 @@
+{
+    "include": [
+    ],
+    "compilerOptions": {
+        "allowJs": false,
+        "jsx": "react",
+        "module": "esnext",
+        "target": "es5",
+        "types": [
+            "webpack-env"
+        ],
+        "typeRoots": [
+            "node_modules",
+            "node_modules/@types"
+        ]
+    }
+}

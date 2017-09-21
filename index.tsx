@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+
 function Article({title, content} : {title: string, content: string}) {
     return (
         <article className="container">
@@ -12,6 +13,10 @@ function Article({title, content} : {title: string, content: string}) {
 
 const app = document.getElementById("app");
 ReactDOM.render(
-    <Article title="Hello Title" content="Hello Content" />, 
+    <Article title="Hello World" content="From Typescript, React and Webpack" />, 
     app
 );
+
+if (module.hot) {
+    module.hot.accept();
+}

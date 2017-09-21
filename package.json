@@ -2,22 +2,25 @@
   "name": "demo",
   "version": "1.0.0",
   "description": "demo",
-  "main": "index.js",
+  "main": "webpack.config.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
     "@types/react": "^16.0.5",
     "@types/react-dom": "^15.5.4",
     "@types/webpack": "^3.0.11",
+    "@types/webpack-env": "^1.13.1",
     "awesome-typescript-loader": "^3.2.3",
     "react": "^16.0.0-rc.3",
     "react-dom": "^16.0.0-rc.3",
     "ts-node": "^3.3.0",
     "typescript": "^2.5.2",
-    "webpack": "^3.6.0"
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.8.2"
   },
   "scripts": {
     "build": "webpack --config webpack.config.ts --display-error-details",
-    "watch": "webpack --config webpack.config.ts --watch"
+    "prod": "webpack --config webpack.config.ts -p --env.NODE_ENV=production",
+    "dev": "./node_modules/.bin/webpack-dev-server --content-base wwwroot --inline --hot"
   }
 }
