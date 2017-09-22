@@ -27,11 +27,10 @@ bld/
 
 # Visual Studio 2015 cache/options directory
 .vs/
+
 # Uncomment if you have tasks that create the project's static files in wwwroot
 dist/
-!dist/_placeholder.txt
-wwwroot/
-!wwwroot/images
+wwwroot/dist/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

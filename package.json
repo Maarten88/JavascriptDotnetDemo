@@ -19,8 +19,8 @@
     "webpack-dev-server": "^2.8.2"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.ts --display-error-details",
-    "prod": "webpack --config webpack.config.ts -p --env.NODE_ENV=production",
+    "build": "./node_modules/.bin/webpack --config webpack.config.ts --display-error-details",
+    "prod": "./node_modules/.bin/webpack --config webpack.config.ts -p --env.NODE_ENV=production",
     "dev": "./node_modules/.bin/webpack-dev-server --content-base wwwroot --inline --hot"
   }
 }
