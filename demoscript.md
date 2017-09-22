@@ -1,17 +1,14 @@
 # Demo script
 
 Prerequisites: 
-- nodejs 8
-- yarn (improved npm)
+- nodejs 8 (current): https://nodejs.org/en/download/current/
+- yarn (improved npm): https://yarnpkg.com/lang/en/docs/install/
 
 ### Setup typescript and webpack
 
-terminal:
+terminal: create package.json javascript project file, add typescript compiler and webpack build tool to the project
 
     yarn init
-
-terminal:
-
     yarn add typescript webpack @types/webpack ts-node awesome-typescript-loader
 
 editor: create tsconfig.json:
@@ -27,7 +24,7 @@ editor: create tsconfig.json:
         }
     }
 
-editor: create webpack.config.ts
+editor: create webpack.config.ts to configure typescript compilation in the build process
 
     import * as webpack from 'webpack';
     import * as path from 'path';
