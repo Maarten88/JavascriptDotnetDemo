@@ -1,13 +1,14 @@
 # Demo script
 
+Prerequisites: 
+- nodejs 8 (current): https://nodejs.org/en/download/current/
+- yarn (improved npm): https://yarnpkg.com/lang/en/docs/install/
+
 ### Setup typescript and webpack
 
-terminal:
+terminal: create package.json javascript project file, add typescript compiler and webpack build tool to the project
 
     yarn init
-
-terminal:
-
     yarn add typescript webpack @types/webpack ts-node awesome-typescript-loader
 
 editor: create tsconfig.json:
@@ -16,7 +17,6 @@ editor: create tsconfig.json:
         "include": [
         ],
         "compilerOptions": {
-            "baseUrl": "./",
             "allowJs": false,
             "jsx": "react",
             "module": "commonjs",
@@ -24,8 +24,32 @@ editor: create tsconfig.json:
         }
     }
 
-editor: create webpack.config.ts
+editor: create webpack.config.ts to configure typescript compilation in the build process
 
+    import * as webpack from 'webpack';
+    import * as path from 'path';
+
+    const config: webpack.Configuration = {  
+        resolve: { extensions: [ '.js', '.jsx', '.ts', '.tsx' ] },
+        entry: {
+            'client': './index.tsx'
+        },
+        output: {
+            filename: "[name].js",
+            path: path.join(__dirname, 'wwwroot/dist'),
+            publicPath: '/dist/'
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.tsx?$/,
+                    use: "awesome-typescript-loader"
+                }
+            ]
+        }
+    };
+
+export default config;
 
 - package.json: 
     - add script `"build": "webpack --config webpack.config.ts"` 
@@ -38,10 +62,16 @@ terminal:
     yarn add react@next react-dom@next @types/react @types/react-dom
 
 editor: new file index.html
-- basic html head and body
-- add styling: `<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">`
-- add `<div id="app"></div>`
-- add `<script src="dist/client.js"></script>`
+
+    <html>
+        <head>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        </head>
+        <body>
+            <div id="app"></div>
+            <script src="dist/client.js"></script>
+        </body>
+    </html>
 
 editor: new file index.tsx
 
@@ -63,4 +93,4 @@ editor: new file index.tsx
         app
     );
 
-### Setup node server with hot module reloading
+Open index.html in a browser and see that it works. Run `yarn watch`, than change some code and refresh to see that it was compiled.
