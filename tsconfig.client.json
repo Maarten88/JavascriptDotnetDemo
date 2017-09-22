@@ -2,15 +2,20 @@
     "include": [
     ],
     "compilerOptions": {
+        "baseUrl": "./",
         "allowJs": false,
         "jsx": "react",
         "module": "esnext",
+        "moduleResolution": "node",
         "target": "es5",
         "types": [
             "webpack-env"
         ],
+        "paths": {
+            "*": ["./types/*", "*"]
+        },
         "typeRoots": [
-            "node_modules",
+            "types",
             "node_modules/@types"
         ]
     }

@@ -1,15 +1,13 @@
 {
-    // this tsconfig is for compiling webpack.config.ts, running in ts-node
-    // vscode will also use this for intellisense
     "include": [
     ],
     "compilerOptions": {
-        "baseUrl": ".",
+        "baseUrl": "./",
         "allowJs": false,
         "jsx": "react",
         "module": "commonjs",
         "moduleResolution": "node",
-        "target": "es2017", // we can, because we have node 8+
+        "target": "es2017",
         "types": [
             "webpack-env"
         ],

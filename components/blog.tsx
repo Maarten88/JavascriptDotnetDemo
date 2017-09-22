@@ -6,7 +6,7 @@ export function Blog({blogs} : {blogs: ArticleProps[]}) {
         <div className = "container">
             <h3 className="">Here are my blog posts</h3>
             <hr />
-            { blogs.map(article => <Article {...article} />)}
+            { blogs.map((article, index) => <Article key={index} {...article} />)}
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import { appFunc } from './app';
+import { appFunc } from './boot-server';
 import * as webpackDevMiddleware from 'webpack-dev-middleware';
 import * as webpackHotMiddleware from 'webpack-hot-middleware';
 import * as webpack from 'webpack';
@@ -13,10 +13,10 @@ if (process.env.NODE_ENV !== 'production') {
     const config = webpackConfig(process.env);
     const compiler = webpack(config);
     
-    app.use(webpackHotMiddleware(compiler));
+    app.use(webpackHotMiddleware(compiler as any));
     app.use(webpackDevMiddleware(compiler, {
         // noInfo: true
-        publicPath: config.output.publicPath
+        publicPath: config[0].output.publicPath
     }));
 }
 

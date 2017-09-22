@@ -25,7 +25,8 @@
     "webpack-hot-middleware": "^2.19.1"
   },
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config webpack.config.ts --display-error-details",
+    "build": "./node_modules/.bin/webpack --config webpack.config.ts",
+    "build-verbose": "./node_modules/.bin/webpack --config webpack.config.ts --display-error-details",
     "prod": "./node_modules/.bin/webpack --config webpack.config.ts -p --env.NODE_ENV=production",
     "dev": "./node_modules/.bin/ts-node server.ts"
   }
