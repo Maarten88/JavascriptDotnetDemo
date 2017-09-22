@@ -202,3 +202,80 @@ The compiled javascript output is around 3Mb. It has embedded sourcemaps and is 
     }
 
 Run `yarn prod` and see that our production build creates a 116kb package.
+
+### Setup server rendering
+
+To enable serverside rendering we need a server process where we can execute our javascript serverside. We will configure node with express to run our application on the server. First we'll create the equivalent of webpack-dev-server.
+
+Terminal: add express node server
+
+    yarn add express @types/express
+    yarn add webpack-hot-middleware @types/webpack-hot-middleware @types/webpack-dev-middleware
+
+Editor: create express server application app.ts:
+
+    import * as path from 'path';
+    import * as express from 'express';
+
+    export const appFunc = () => {
+        const app = express();
+        const indexPath = path.join(__dirname, './wwwroot/index.html');
+        const publicPath = express.static(path.join(__dirname, './wwwroot'));
+
+        app.use('/wwwroot', publicPath);
+        app.get('/', function (_, res) { res.sendFile(indexPath) });
+
+        return app;
+    };
+
+Create the express server.ts:
+
+    import { appFunc } from './app';
+    import * as webpackDevMiddleware from 'webpack-dev-middleware';
+    import * as webpackHotMiddleware from 'webpack-hot-middleware';
+    import * as webpack from 'webpack';
+    import * as path from 'path';
+    import webpackConfig from './webpack.config';
+
+    const port = (process.env.PORT || 8080);
+    const app = appFunc();
+
+    if (process.env.NODE_ENV !== 'production') {
+
+        const config = webpackConfig(process.env);
+        const compiler = webpack(config);
+        
+        const distPath = path.join(__dirname, './wwwroot/dist')
+        app.use(webpackHotMiddleware(compiler));
+        app.use(webpackDevMiddleware(compiler, {
+            // noInfo: true
+            publicPath: config.output.publicPath
+        }));
+    }
+
+    app.listen(port)
+    console.log(`Listening at http://localhost:${port}`)
+
+Modify webpack.config.ts for hot module reloading:
+
+        ...
+        entry: {
+            'client': ['webpack-hot-middleware/client', './index.tsx']
+        },
+        ...
+        plugins: [
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.NoEmitOnErrorsPlugin()
+        ],
+        
+Update the dev script in package.json:
+
+    "scripts": {
+        ...
+        "dev": "./node_modules/.bin/ts-node server.ts"
+    }
+
+Now run it: `yarn dev`. We now have exactly the same behaviour as before: our page loads and supports hot module replacement. The difference is that we now have a server process that we can use for serverside rendering.
+
+
+

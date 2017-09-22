@@ -12,7 +12,7 @@ const config : (env: any) => webpack.Configuration = (env = {}) => {
         },
         devtool: debug ? "inline-source-map" : false,
         entry: {
-            'client': './index.tsx'
+            'client': ['webpack-hot-middleware/client', './index.tsx']
         },
         output: {
             filename: "[name].js",
@@ -31,7 +31,11 @@ const config : (env: any) => webpack.Configuration = (env = {}) => {
                     }
                 }
             ]
-        }
+        },
+        plugins: [
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.NoEmitOnErrorsPlugin()
+        ]
     };
 }
 
