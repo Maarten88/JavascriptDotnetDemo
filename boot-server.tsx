@@ -15,11 +15,12 @@ export const appFunc = () => {
 
     app.get('/', function (_, res) { 
 
-        // write opening <html> <head> <body> tags streamed
+        res.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\"></head><body><div id=\"app\"></div>");
+
         renderToNodeStream(<Blog blogs={blogs} />)
-            .pipe(res)
-            .on('end', () => {
-                // write the rest of the page, </body>, </html>
+            .pipe(res, {end: false})
+            .on('unpipe', () => {
+                res.write("<script src=\"dist/client.js\"></script></body></html>");
                 res.end();
             })
 

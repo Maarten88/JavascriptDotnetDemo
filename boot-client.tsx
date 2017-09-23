@@ -4,7 +4,7 @@ import { Blog } from './components/blog';
 import { blogs } from './store/blogs';
 
 const app = document.getElementById("app");
-ReactDOM.render(
+(ReactDOM as any).hydrate(
     <Blog blogs={blogs} />, 
     app
 );
