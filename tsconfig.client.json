@@ -6,7 +6,6 @@
         "allowJs": false,
         "jsx": "react",
         "module": "esnext",
-        "moduleResolution": "node",
         "target": "es5",
         "types": [
             "webpack-env"

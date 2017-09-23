@@ -1,12 +1,14 @@
-import { appFunc } from './boot-server';
+import { configure } from './boot-server';
 import * as webpackDevMiddleware from 'webpack-dev-middleware';
 import * as webpackHotMiddleware from 'webpack-hot-middleware';
 import * as webpack from 'webpack';
 import * as path from 'path';
 import webpackConfig from './webpack.config';
+import * as express from 'express';
 
 const port = (process.env.PORT || 8080);
-const app = appFunc();
+
+const app = configure(express());
 
 if (process.env.NODE_ENV !== 'production') {
 
@@ -18,6 +20,9 @@ if (process.env.NODE_ENV !== 'production') {
         // noInfo: true
         publicPath: config[0].output.publicPath
     }));
+} else {
+    const publicPath = express.static(path.join(__dirname, './wwwroot/dist'));
+    app.use('/dist', publicPath);
 }
 
 app.listen(port)

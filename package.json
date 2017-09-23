@@ -16,11 +16,11 @@
     "@types/webpack-hot-middleware": "^2.16.0",
     "awesome-typescript-loader": "^3.2.3",
     "express": "^4.15.4",
-    "fs": "^0.0.1-security",
     "react": "^16.0.0-rc.3",
     "react-dom": "^16.0.0-rc.3",
     "ts-node": "^3.3.0",
     "typescript": "^2.5.2",
+    "uglifyjs-webpack-plugin": "1.0.0-beta.2",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.8.2",
     "webpack-hot-middleware": "^2.19.1"
@@ -28,8 +28,9 @@
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.ts",
     "build-verbose": "./node_modules/.bin/webpack --config webpack.config.ts --display-error-details",
-    "prod": "./node_modules/.bin/webpack --config webpack.config.ts -p --env.NODE_ENV=production",
-    "dev": "./node_modules/.bin/ts-node server.ts",
+    "build-prod": "./node_modules/.bin/webpack --config webpack.config.ts --env.NODE_ENV=production",
+    "dev": "set NODE_ENV=development&./node_modules/.bin/ts-node server.ts",
+    "prod": "set NODE_ENV=production&node_modules/.bin/ts-node server.ts",
     "debug": "./node_modules/.bin/ts-node --inspect=9229 --debug-brk server.ts"
   }
 }

@@ -1,5 +1,6 @@
 import * as webpack from 'webpack';
 import * as path from 'path';
+import * as UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 
 const config : (env: any) => webpack.Configuration[] = (env = {}) => {
 
@@ -35,7 +36,14 @@ const config : (env: any) => webpack.Configuration[] = (env = {}) => {
         },
         plugins: debug ? [
             new webpack.HotModuleReplacementPlugin()
-        ] : [],
+        ] : [
+            new webpack.DefinePlugin({
+                'process.env':{
+                    'NODE_ENV': JSON.stringify('production')
+                }
+            }),            
+            new UglifyJSPlugin()
+        ],
         node: {
             fs: 'empty',
             child_process: 'empty',
@@ -67,6 +75,26 @@ const config : (env: any) => webpack.Configuration[] = (env = {}) => {
                 }
             ]
         },
+        plugins: debug ? [
+        ] : [
+            new webpack.DefinePlugin({
+                'process.env':{
+                    'NODE_ENV': JSON.stringify('production')
+                }
+            }),            
+            new UglifyJSPlugin({
+                sourceMap: true,
+                parallel: {
+                    cache: true,
+                    workers: 2
+                },
+                uglifyOptions: {
+                    mangle: false,
+                    ecma: 8,
+                    compress: false
+                }
+            })
+        ],
         node: {
             fs: 'empty',
             net: 'empty'
