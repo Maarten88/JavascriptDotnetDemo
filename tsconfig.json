@@ -9,7 +9,7 @@
         "module": "commonjs",
         "target": "es2017", // we can, because we have node 8+
         "types": [
-            "webpack-env"
+            "node"
         ]
     }
 }
