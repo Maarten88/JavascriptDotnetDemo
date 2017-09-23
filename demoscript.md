@@ -194,6 +194,9 @@ Now improve hot module reloading to avoid a complete screen refresh. In index.ts
 
 Run `yarn dev` and edit index.tsx to see hot module replacement working. Comment out these lines and make an edit to see the difference.
 
+Now expand the app a little bit. Make a folder `components` and put the Article component there. Also make a Blog component that returns a list of Article components.
+Make a `store` folder and put a blogs.ts file there that exports an array of article items, and pass those into the Blog component.
+
 The compiled javascript output is around 3Mb. It has embedded sourcemaps and is uncompressed. Lets make a production build. Edit the scripts section in packages.json to add the production build:
 
     "scripts": {
