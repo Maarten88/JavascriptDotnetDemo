@@ -1,6 +1,6 @@
 {
-    // this tsconfig is for compiling webpack.config.ts, running in ts-node
-    // vscode will also use this for intellisense
+    // this tsconfig is for typescript running in node, and ts-node
+    // vscode will also use this configuration for intellisense
     "include": [
     ],
     "compilerOptions": {
@@ -9,9 +9,9 @@
         "jsx": "react",
         "module": "commonjs",
         "moduleResolution": "node",
-        "target": "es2017", // we can, because we have node 8+
+        "target": "es2017", // because we run this in node 8+
         "types": [
-            "webpack-env"
+            "node"
         ],
         "paths": {
             "*": ["./types/*", "*"]

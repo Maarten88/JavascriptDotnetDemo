@@ -13,7 +13,7 @@ const config : (env: any) => webpack.Configuration[] = (env = {}) => {
         },
         devtool: debug ? "inline-source-map" : false,
         entry: {
-            'client': ['webpack-hot-middleware/client?name=client', './boot-client.tsx']
+            'client': debug ? ['webpack-hot-middleware/client?name=client', './boot-client.tsx'] : ['./boot-client.tsx']
         },
         output: {
             filename: "[name].js",
@@ -33,9 +33,9 @@ const config : (env: any) => webpack.Configuration[] = (env = {}) => {
                 }
             ]
         },
-        plugins: [
+        plugins: debug ? [
             new webpack.HotModuleReplacementPlugin()
-        ],
+        ] : [],
         node: {
             fs: 'empty',
             child_process: 'empty',

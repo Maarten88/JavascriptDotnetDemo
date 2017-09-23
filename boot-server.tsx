@@ -32,7 +32,7 @@ export const appFunc = () => {
                 res.write("<script src=\"dist/client.js\"></script></body></html>");
                 res.end();
             });
-});
+    });
 
     return app;
 };
