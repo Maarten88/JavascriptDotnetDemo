@@ -31,6 +31,6 @@
     "build:prod": "./node_modules/.bin/webpack --config webpack.config.ts --env.NODE_ENV=production",
     "dev": "set NODE_ENV=development&./node_modules/.bin/ts-node server.ts",
     "prod": "set NODE_ENV=production&node_modules/.bin/ts-node server.ts",
-    "debug": "./node_modules/.bin/ts-node --inspect=9229 --debug-brk server.ts"
+    "debug": "./node_modules/.bin/ts-node --inspect=9229 --inspect-brk server.ts"
   }
 }
