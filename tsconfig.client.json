@@ -3,19 +3,15 @@
     ],
     "compilerOptions": {
         "baseUrl": "./",
-        "allowJs": false,
+        "allowJs": true,
         "jsx": "react",
         "module": "esnext",
         "target": "es5",
         "types": [
             "webpack-env"
         ],
-        "paths": {
-            "*": ["./types/*", "*"]
-        },
         "typeRoots": [
-            "types",
-            "node_modules/@types"
+            "./node_modules/@types"
         ]
     }
 }

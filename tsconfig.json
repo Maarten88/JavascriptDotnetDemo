@@ -8,16 +8,11 @@
         "allowJs": false,
         "jsx": "react",
         "module": "commonjs",
-        "moduleResolution": "node",
         "target": "es2017", // because we run this in node 8+
         "types": [
             "node"
         ],
-        "paths": {
-            "*": ["./types/*", "*"]
-        },
         "typeRoots": [
-            "types",
             "node_modules/@types"
         ]
     }

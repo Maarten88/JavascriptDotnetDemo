@@ -4,6 +4,11 @@ import * as React from 'react';
 import { renderToNodeStream } from 'react-dom/server';
 import { Blog } from './components/blog';
 import { blogs } from './store/blogs';
+import { Readable } from "stream";
+
+declare module "react-dom/server" {
+    export function renderToNodeStream(element: React.ReactElement<any>): Readable;
+}
 
 const App = () => {
     return(

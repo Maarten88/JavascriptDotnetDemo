@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
     app.use(webpackHotMiddleware(compiler as any));
     app.use(webpackDevMiddleware(compiler, {
         // noInfo: true
-        publicPath: config[0].output.publicPath
+        publicPath: '/dist/'
     }));
 } else {
     const publicPath = express.static(path.join(__dirname, './wwwroot/dist'));
