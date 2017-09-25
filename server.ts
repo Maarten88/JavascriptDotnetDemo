@@ -1,4 +1,4 @@
-import { createServerRenderer } from './boot-server';
+import { renderFunc } from './boot-server';
 import * as webpackDevMiddleware from 'webpack-dev-middleware';
 import * as webpackHotMiddleware from 'webpack-hot-middleware';
 import * as webpack from 'webpack';
@@ -27,7 +27,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.get('/', function (_, res) { 
     
-    createServerRenderer({}).then(renderResult => {
+    renderFunc({}).then(renderResult => {
         res.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\"></head><body>");
         res.write(renderResult.html);
         res.write("<script src=\"dist/client.js\"></script></body></html>");

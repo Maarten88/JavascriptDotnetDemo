@@ -13,9 +13,7 @@ declare module "react-dom/server" {
 
 const App = () => {
     return(
-        <div id="app">
-            <Blog blogs={blogs} />
-        </div>
+        <Blog blogs={blogs} />
     );
 }
 
@@ -23,16 +21,15 @@ interface RenderResult {
     html: string;
 }
 
-export function createServerRenderer(params: any) {
-
+export function renderFunc(params: any) {
     return new Promise<RenderResult>((resolve, reject) => {
-
-        const writable = new WritableStreamBuffer();
-        renderToNodeStream(<App />)
-            .pipe(writable)
-            .on('finish', () => {
-                const html = writable.getContentsAsString('utf-8');
-                resolve({ html });
+      
+                const writable = new WritableStreamBuffer();
+                renderToNodeStream(<App />)
+                    .pipe(writable)
+                    .on('finish', () => {
+                        const html = writable.getContentsAsString('utf-8');
+                        resolve({ html });
+                    });
             });
-    });
 }
