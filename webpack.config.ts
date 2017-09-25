@@ -13,7 +13,7 @@ const config : (env: any) => webpack.Configuration = (env = {}) => {
         },
         devtool: debug ? "inline-source-map" : false,
         entry: {
-            'client': debug ? ['webpack-hot-middleware/client', './boot-client.tsx'] : ['./boot-client.tsx']
+            'main-client': debug ? ['webpack-hot-middleware/client', './boot-client.tsx'] : ['./boot-client.tsx']
         },
         output: {
             filename: "[name].js",
