@@ -5,6 +5,7 @@ import { renderToNodeStream } from 'react-dom/server';
 import { Blog } from './components/blog';
 import { blogs } from './store/blogs';
 import { Readable } from "stream";
+import { WritableStreamBuffer } from 'stream-buffers';
 
 declare module "react-dom/server" {
     export function renderToNodeStream(element: React.ReactElement<any>): Readable;
@@ -18,19 +19,20 @@ const App = () => {
     );
 }
 
-export function configure(app: express.Application) : express.Application
-{
-    app.get('/', function (_, res) { 
+interface RenderResult {
+    html: string;
+}
 
-        res.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\"></head><body>");
+export function createServerRenderer(params: any) {
 
+    return new Promise<RenderResult>((resolve, reject) => {
+
+        const writable = new WritableStreamBuffer();
         renderToNodeStream(<App />)
-            .pipe(res, {end: false})
-            .on('unpipe', () => {
-                res.write("<script src=\"dist/client.js\"></script></body></html>");
-                res.end();
+            .pipe(writable)
+            .on('finish', () => {
+                const html = writable.getContentsAsString('utf-8');
+                resolve({ html });
             });
     });
-
-    return app;
-};
+}
