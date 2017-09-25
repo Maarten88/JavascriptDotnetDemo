@@ -1,10 +1,4 @@
-# Demo script
-
-Prerequisites: 
-- nodejs 8 (current): https://nodejs.org/en/download/current/
-- yarn (improved npm): https://yarnpkg.com/lang/en/docs/install/
-
-### Setup typescript and webpack
+### 1: Setup typescript and webpack
 
 terminal: create package.json javascript project file, add typescript compiler and webpack build tool to the project
 
@@ -94,3 +88,4 @@ editor: new file index.tsx
     );
 
 Open index.html in a browser and see that it works. Run `yarn watch`, than change some code and refresh to see that it was compiled.
+
