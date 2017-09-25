@@ -6,11 +6,11 @@
         "jsx": "react",
         "module": "esnext",
         "target": "es5",
+        "sourceMap": true,
         "types": [
             "webpack-env"
         ],
         "typeRoots": [
-            "node_modules",
             "node_modules/@types"
         ]
     }

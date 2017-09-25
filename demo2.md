@@ -21,7 +21,7 @@ Edit the scripts section in packages.json to easily start a development session:
     }
 
 
-Improve our typescript compilation. We want es2017 modules that can be hot-reloaded. This is also also needed for tree shaking.
+Editing a file refreshes the page. But webpack can do it much nicer: it can reload individual javascript files. To get that, we'll need to change our typescript compilation a liitle bit. We want es2017 modules that can be hot-reloaded. This is also also needed for tree shaking.
 
 Terminal:
 
@@ -37,18 +37,46 @@ Editor: create tsconfig.client.json:
             "jsx": "react",
             "module": "esnext",
             "target": "es5",
+            "sourceMap": true,
             "types": [
                 "webpack-env"
             ],
             "typeRoots": [
-                "node_modules",
                 "node_modules/@types"
             ]
         }
     }
 
 
-Improve our webpack.config.ts to use this typescript config, and also configure it to enable development and debug builds:
+Improve our webpack.config.ts to use this typescript config:
+
+            ...
+            use: {
+                loader: "awesome-typescript-loader",
+                options: {
+                    configFileName: "tsconfig.client.json"
+                }
+            }
+            ...
+
+
+
+Now improve hot module reloading to avoid a complete screen refresh. In index.tsx, add:
+
+    if (module.hot) {
+        module.hot.accept();
+    }
+
+Run `yarn dev` and edit index.tsx to see hot module replacement working. Comment out these lines and make an edit to see the difference.
+
+Now it's really easy to expand the app a little bit. Make a folder `components` and put the Article component there. Also make a Blog component that returns a list of Article components.
+Make a `store` folder and put a blogs.ts file there that exports an array of article items, and pass those into the Blog component.
+
+
+### Optional: configure production build
+The compiled javascript output is over 2Mb, and we only wrote a few lines of code. The output has embedded sourcemaps and is uncompressed. It contains the development build of React. Lets make a production build.
+
+Configure webpack.config.ts to add a production build:
 
     import * as webpack from 'webpack';
     import * as path from 'path';
@@ -89,18 +117,8 @@ Improve our webpack.config.ts to use this typescript config, and also configure 
 
     export default config;
 
-Now improve hot module reloading to avoid a complete screen refresh. In index.tsx, add:
 
-    if (module.hot) {
-        module.hot.accept();
-    }
-
-Run `yarn dev` and edit index.tsx to see hot module replacement working. Comment out these lines and make an edit to see the difference.
-
-Now expand the app a little bit. Make a folder `components` and put the Article component there. Also make a Blog component that returns a list of Article components.
-Make a `store` folder and put a blogs.ts file there that exports an array of article items, and pass those into the Blog component.
-
-The compiled javascript output is around 3Mb. It has embedded sourcemaps and is uncompressed. Lets make a production build. Edit the scripts section in packages.json to add the production build:
+Edit the scripts section in packages.json to add the production build:
 
     "scripts": {
         ...
