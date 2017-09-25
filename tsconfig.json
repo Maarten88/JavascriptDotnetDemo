@@ -9,6 +9,7 @@
         "jsx": "react",
         "module": "commonjs",
         "target": "es2017", // because we run this in node 8+
+        "sourceMap": true,
         "types": [
             "node"
         ],
