@@ -17,7 +17,7 @@ const config : (env: any) => webpack.Configuration = (env = {}) => {
         },
         output: {
             filename: "[name].js",
-            path: path.resolve(__dirname, 'wwwroot/dist'),
+            path: path.join(__dirname, 'wwwroot', 'dist'),
             publicPath: '/dist/'
         },
         module: {
