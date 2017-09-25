@@ -8,6 +8,7 @@
         "module": "esnext",
         "target": "es5",
         "sourceMap": true,
+        "lib": ["dom", "es5"],
         "types": [
             "webpack-env"
         ],

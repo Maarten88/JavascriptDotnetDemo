@@ -6,6 +6,7 @@ import { Blog } from './components/blog';
 import { blogs } from './store/blogs';
 import { Readable } from "stream";
 import { WritableStreamBuffer } from 'stream-buffers';
+import { createServerRenderer, RenderResult, RenderToStringResult } from 'aspnet-prerendering';
 
 declare module "react-dom/server" {
     export function renderToNodeStream(element: React.ReactElement<any>): Readable;
@@ -13,26 +14,22 @@ declare module "react-dom/server" {
 
 const App = () => {
     return(
-        <div id="app">
-            <Blog blogs={blogs} />
-        </div>
+        <Blog blogs={blogs} />
     );
 }
 
-interface RenderResult {
-    html: string;
-}
-
-export function createServerRenderer(params: any) {
-
-    return new Promise<RenderResult>((resolve, reject) => {
-
-        const writable = new WritableStreamBuffer();
-        renderToNodeStream(<App />)
-            .pipe(writable)
-            .on('finish', () => {
-                const html = writable.getContentsAsString('utf-8');
-                resolve({ html });
+export function renderFunc(params: any) {
+    return new Promise<RenderToStringResult>((resolve, reject) => {
+      
+                const writable = new WritableStreamBuffer();
+                renderToNodeStream(<App />)
+                    .pipe(writable)
+                    .on('finish', () => {
+                        const html = writable.getContentsAsString('utf-8');
+                        resolve({ html });
+                    });
             });
-    });
 }
+
+// default export will be called by aspnet-prerenderer
+export default createServerRenderer(renderFunc);

@@ -18,6 +18,20 @@
                 "request": "launch",
                 "url": "http://localhost:8080/",
                 "webRoot": "${workspaceRoot}"
+            },
+            {
+                "name": "Launch Dotnet Server",
+                "type": "coreclr",
+                "request": "launch",
+                "program": "${workspaceRoot}\\bin\\Debug\\netcoreapp2.0\\JavascriptDotnetDemo.dll",
+                "args": [],
+                "cwd": "${workspaceRoot}",
+                "console": "internalConsole",
+                "stopAtEntry": false,
+                "internalConsoleOptions": "openOnSessionStart",
+                "env": {
+                    "ASPNETCORE_ENVIRONMENT": "Development"
+                }
             }           
         ]
     }

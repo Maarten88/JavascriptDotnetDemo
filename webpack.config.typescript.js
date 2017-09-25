@@ -9,4 +9,5 @@ const options = {
         checkJs: false
     }
 };
-eval(tsc.transpileModule(webpackConfig, options).outputText);
+console.log(tsc.transpileModule(webpackConfig, options).outputText);
+module.exports = eval(tsc.transpileModule(webpackConfig, options).outputText);

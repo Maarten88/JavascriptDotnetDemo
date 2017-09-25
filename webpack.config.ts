@@ -2,18 +2,19 @@ import * as webpack from 'webpack';
 import * as path from 'path';
 import * as UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 
-const config : (env: any) => webpack.Configuration = (env = {}) => {
+export default function(env: any = {}): webpack.Configuration[] {
 
     const debug = env.NODE_ENV !== "production";
     console.log('debug: ', debug) 
     
-    return {
+    return [{
+        name: 'client',
         resolve: { 
             extensions: [ '.js', '.jsx', '.ts', '.tsx' ]
         },
         devtool: debug ? "inline-source-map" : false,
         entry: {
-            'client': debug ? ['webpack-hot-middleware/client', './boot-client.tsx'] : ['./boot-client.tsx']
+            'main-client': ['./boot-client.tsx']
         },
         output: {
             filename: "[name].js",
@@ -27,14 +28,14 @@ const config : (env: any) => webpack.Configuration = (env = {}) => {
                     use: {
                         loader: "awesome-typescript-loader",
                         options: {
-                            configFileName: "tsconfig.client.json"
+                            configFileName: "tsconfig.json"
                         }
                     }
                 }
             ]
         },
         plugins: debug ? [
-            new webpack.HotModuleReplacementPlugin()
+            // new webpack.HotModuleReplacementPlugin()
         ] : [
             new webpack.DefinePlugin({
                 'process.env':{
@@ -43,7 +44,33 @@ const config : (env: any) => webpack.Configuration = (env = {}) => {
             }),            
             new UglifyJSPlugin()
         ]
-    }
+    },{
+        name: 'server',
+        target: 'node',
+        resolve: { 
+            extensions: [ '.js', '.jsx', '.ts', '.tsx' ]
+        },
+        devtool: debug ? "inline-source-map" : false,
+        entry: {
+            'main-server': './boot-server.tsx'
+        },
+        output: {
+            filename: "[name].js",
+            path: path.join(__dirname, 'server', 'dist'),
+            libraryTarget: 'commonjs'
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.tsx?$/,
+                    use: {
+                        loader: "awesome-typescript-loader",
+                        options: {
+                            configFileName: "tsconfig.json"
+                        }
+                    }
+                }
+            ]
+        }
+    }];
 }
-
-export default config;
