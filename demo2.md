@@ -1,4 +1,4 @@
-### 2: Setup node server with hot module reloading
+### 2: Setup webpack dev server with hot module reloading
 
 Terminal: install webpack dev server:
 
