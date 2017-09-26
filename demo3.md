@@ -19,6 +19,7 @@ Editor: create express server application server.ts:
     import * as path from 'path';
     import webpackConfig from './webpack.config';
     import * as express from 'express';
+    import { renderFunc } from './boot-server';
 
     const port = (process.env.PORT || 8080);
 
@@ -39,9 +40,19 @@ Editor: create express server application server.ts:
         app.use('/dist', publicPath);
     }
 
-    app.listen(port);
-    console.log(`Listening at http://localhost:${port}`);
+    app.get('/', function (_, res) { 
+        
+        renderFunc({}).then(renderResult => {
+            res.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\"></head><body><div id=\"app\">");
+            res.write(renderResult.html);
+            res.write("</div><script src=\"/dist/main-client.js\"></script></body></html>");
+            res.end();
+        })
+    });    
 
+
+    app.listen(port)
+    console.log(`Listening at http://localhost:${port}`)
 
 We are going to make a serverside version of our application, the root of which is in `client.tsx`. We are going to rename that file to `boot-client.tsx`, and make a new `boot-server.tsx` that will also render our react components, only we'll do it server-side, inside node. This file will render our application html code into a string, that will be returned as a promise to server.ts.
 
@@ -62,9 +73,7 @@ Editor: boot-server.tsx
 
     const App = () => {
         return(
-            <div id="app">
-                <Blog blogs={blogs} />
-            </div>
+            <Blog blogs={blogs} />
         );
     }
 
@@ -72,22 +81,22 @@ Editor: boot-server.tsx
         html: string;
     }
 
-    export function createServerRenderer(params: any) {
-
+    export function renderFunc(params: any) {
         return new Promise<RenderResult>((resolve, reject) => {
-
-            const writable = new WritableStreamBuffer();
-            renderToNodeStream(<App />)
-                .pipe(writable)
-                .on('finish', () => {
-                    const html = writable.getContentsAsString('utf-8');
-                    resolve({ html });
+        
+                    const writable = new WritableStreamBuffer();
+                    renderToNodeStream(<App />)
+                        .pipe(writable)
+                        .on('finish', () => {
+                            const html = writable.getContentsAsString('utf-8');
+                            resolve({ html });
+                        });
                 });
-        });
     }
 
+The serverside renderer uses the new renderToNodeStream() function, that efficiently streams the result from React server rendering into a buffer. When it it done, the stream is read into a string and the promise resolves.
 
-React 16 has a special function to pickup serverside rendered html code and continue clientside, called hydrate().
+React 16 has a special function to pickup serverside rendered html code and continue clientside, called hydrate(). Like renderToNodeStream, it is also not yet added to the React typings, so we'll declare it inline.
 
 Update boot-client.tsx with the foollowing code:
 
@@ -107,7 +116,7 @@ Update boot-client.tsx with the foollowing code:
     );
 
 
-Modify webpack.config.ts for hot module reloading according to the docs:
+Modify webpack.config.ts for hot module reloading according to the docs (https://github.com/glenjamin/webpack-hot-middleware):
 
         ...
         entry: {
@@ -127,7 +136,7 @@ Update the dev script in package.json:
         "dev": "./node_modules/.bin/ts-node server.ts"
     }
 
-Now run it: `yarn dev`. We now have exactly the same behaviour as before: our page loads and supports hot module replacement. The difference is that we now have a server process does serverside rendering of our react application.
+Now run it: `yarn dev`. We now have exactly the same behaviour as before: our page loads and supports hot module replacement. The difference is that we now have a server process does serverside rendering of our react application. SEO is happy now.
 
 All of this has gotten quite complex. If there is a problem, how do we fix it? We need to be able to do some debugging. First, we'll add a script entry to package.json:
 
@@ -162,5 +171,3 @@ Add the Debugger for Chrome extension to vscode and relaunch it. Now go to the d
 This configures both web and server debugging, and you can directly edit source files. You'll have to restart node to run updated server code, but clientside code will automatically reload.
 
 It is possible to debug code running in nodejs from vscode, but it can also be done from Chrome. Run `yarn debug`, open the page on http://localhost:8080 from a terminal and open chrome developer tools (F12), then find the `Open dedicated DevTools for nodejs` icon in the upper left corner, and click it. Or enter chrome:inspect in the navigation bar. Because we entered inspect-brk as a startup parameter, the debugger will break on the first line that is hit, which in our case is ts-node that will compile our typescript code before running it.
-
-

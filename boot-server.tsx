@@ -21,14 +21,14 @@ const App = () => {
 export function renderFunc(params: any) {
     return new Promise<RenderToStringResult>((resolve, reject) => {
       
-                const writable = new WritableStreamBuffer();
-                renderToNodeStream(<App />)
-                    .pipe(writable)
-                    .on('finish', () => {
-                        const html = writable.getContentsAsString('utf-8');
-                        resolve({ html });
-                    });
+        const writable = new WritableStreamBuffer();
+        renderToNodeStream(<App />)
+            .pipe(writable)
+            .on('finish', () => {
+                const html = writable.getContentsAsString('utf-8');
+                resolve({ html });
             });
+    });
 }
 
 // default export will be called by aspnet-prerenderer
