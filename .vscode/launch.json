@@ -1,23 +1,23 @@
 {
-        "version": "0.2.0",
-        "configurations": [
-            {
-                "name": "Debug Server Rendering",
-                "type": "node",
-                "request": "launch",
-                "cwd": "${workspaceRoot}",
-                "runtimeExecutable": "yarn",
-                "runtimeArgs": [
-                    "run", "debug"
-                ],
-                "port": 9229
-            },
-            {
-                "name": "Launch in Chrome",
-                "type": "chrome",
-                "request": "launch",
-                "url": "http://localhost:8080/",
-                "webRoot": "${workspaceRoot}"
-            }           
-        ]
-    }
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Server Rendering",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": [
+                "run", "debug"
+            ],
+            "port": 9229
+        },
+        {
+            "name": "Launch in Chrome",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8080/",
+            "webRoot": "${workspaceRoot}"
+        }           
+    ]
+}
