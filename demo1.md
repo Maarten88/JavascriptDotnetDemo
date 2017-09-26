@@ -43,11 +43,11 @@ editor: create webpack.config.ts to configure typescript compilation in the buil
         }
     };
 
-export default config;
+    export default config;
 
-- package.json: 
-    - add script `"build": "webpack --config webpack.config.ts"` 
-    - add script `"watch": "webpack --config webpack.config.ts --watch"` 
+Editor, in package.json:
+- add script `"build": "webpack --config webpack.config.ts"` 
+- add script `"watch": "webpack --config webpack.config.ts --watch"` 
 
 ### Create react app
 
@@ -55,7 +55,7 @@ terminal:
 
     yarn add react@next react-dom@next @types/react @types/react-dom
 
-editor: new file index.html
+editor: new file wwwroot/index.html
 
     <html>
         <head>
