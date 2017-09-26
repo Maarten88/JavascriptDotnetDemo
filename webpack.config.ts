@@ -28,7 +28,7 @@ export default function(env: any = {}): webpack.Configuration[] {
                     use: {
                         loader: "awesome-typescript-loader",
                         options: {
-                            configFileName: "tsconfig.json"
+                            configFileName: "tsconfig.client.json"
                         }
                     }
                 }

@@ -24,6 +24,22 @@ Now we need to configure NodeServices. There is no nuget package needed, it is p
     });
     ...
 
+We cannot use our webpack.config.ts file directly from dotnet, so we need to load it indirectly via javascript, via webpack.config.typescript.js:
+
+    // an alternative to ts-node for bootstrapping webpack.config in typescript
+    const tsc = require("typescript");
+    const webpackConfig = require("fs").readFileSync("./webpack.config.ts", "utf8");
+    const options = {
+        compilerOptions: {
+            target: "es5",
+            module: "commonjs",
+            allowJs: false,
+            checkJs: false
+        }
+    };
+    module.exports = eval(tsc.transpileModule(webpackConfig, options).outputText);
+
+
 We are going to put our react app on the homepage.
 
 Views/Index.cshtml:
@@ -85,6 +101,7 @@ in webpack.config.ts, add a compilation target for the server:
 
 Remove the HMR settings for the client, as the AspNet WebpackDevMiddleware will make the same modifications dynamically, if options.HotModuleReplacement = true is specified.
 
+        name: 'client', // added because there are now two webpack configs
         entry: {
             'main-client': ['./boot-client.tsx'] // removed webpack-dev-middleware/client
         },
@@ -94,58 +111,42 @@ Remove the HMR settings for the client, as the AspNet WebpackDevMiddleware will 
         ] : [
 
 
-We cannot use our webpack.config.ts file directly, so we need to load it indirectly via javascript, via webpack.config.typescript.js:
-
-    // an alternative to ts-node for bootstrapping webpack.config in typescript
-    const tsc = require("typescript");
-    const webpackConfig = require("fs").readFileSync("./webpack.config.ts", "utf8");
-    const options = {
-        compilerOptions: {
-            target: "es5",
-            module: "commonjs",
-            allowJs: false,
-            checkJs: false
-        }
-    };
-    console.log(tsc.transpileModule(webpackConfig, options).outputText);
-    module.exports = eval(tsc.transpileModule(webpackConfig, options).outputText);
-
 Add a vscode taks to compile our project.
 tasks.json:
 
-        {
-            "taskName": "Build Dotnet",
-            "type": "shell",
-            "command": "dotnet",
-            "args": [
-                "build"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher":"$msCompile"
-        }
+    {
+        "taskName": "Build Dotnet",
+        "type": "shell",
+        "command": "dotnet",
+        "args": [
+            "build"
+        ],
+        "group": {
+            "kind": "build",
+            "isDefault": true
+        },
+        "problemMatcher":"$msCompile"
+    }
 
 
 Also add a launch entry to start it in the debugger.
 launch.json:
 
-            {
-                "name": "Launch Dotnet Server",
-                "type": "coreclr",
-                "request": "launch",
-                "program": "${workspaceRoot}\\bin\\Debug\\netcoreapp2.0\\JavascriptDotnetDemo.dll",
-                "args": [],
-                "cwd": "${workspaceRoot}",
-                "console": "internalConsole",
-                "stopAtEntry": true,
-                "internalConsoleOptions": "openOnSessionStart",
-                "env": {
-                    "ASPNETCORE_ENVIRONMENT": "Development"
-                }
-            }           
+    {
+        "name": "Launch Dotnet Server",
+        "type": "coreclr",
+        "request": "launch",
+        "program": "${workspaceRoot}\\bin\\Debug\\netcoreapp2.0\\JavascriptDotnetDemo.dll",
+        "args": [],
+        "cwd": "${workspaceRoot}",
+        "console": "internalConsole",
+        "stopAtEntry": true,
+        "internalConsoleOptions": "openOnSessionStart",
+        "env": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        }
+    }           
 
-Build the project (ctrl-shift-B) and start it.
+Build the project (ctrl-shift-B) and then start it.
 
 If everything is correct, our component will appear on the homepage, webpack_hmr will connect and we can edit typescript code with hot module replacemant.
