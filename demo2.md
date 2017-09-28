@@ -5,6 +5,17 @@ Terminal: install webpack dev server:
     yarn add webpack-dev-server
     yarn global add webpack-dev-server
 
+Webpack dev server needs the webpack config to be a function:
+
+Edit webpack.config.ts:
+
+    const config : (env: any) => webpack.Configuration = (env = {}) => {
+        return {
+            ... (what was there before)
+        }
+    }
+
+
 We can now run `webpack-dev-server --content-base wwwroot` and see that on edits, our page gets reloaded. Go to http://localhost:8080/webpack-dev-server/index.html to see it.
 
 we can also run
