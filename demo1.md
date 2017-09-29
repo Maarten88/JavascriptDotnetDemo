@@ -53,7 +53,7 @@ Editor, in package.json:
 
 terminal:
 
-    yarn add react@next react-dom@next @types/react @types/react-dom
+    yarn add react react-dom @types/react @types/react-dom
 
 editor: new file wwwroot/index.html
 
