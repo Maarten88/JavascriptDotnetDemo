@@ -1,37 +1,37 @@
 {
-        "version": "0.2.0",
-        "configurations": [
-            {
-                "name": "Debug Server Rendering",
-                "type": "node",
-                "request": "launch",
-                "cwd": "${workspaceRoot}",
-                "runtimeExecutable": "yarn",
-                "runtimeArgs": [
-                    "run", "debug"
-                ],
-                "port": 9229
-            },
-            {
-                "name": "Launch in Chrome",
-                "type": "chrome",
-                "request": "launch",
-                "url": "http://localhost:8080/",
-                "webRoot": "${workspaceRoot}"
-            },
-            {
-                "name": "Launch Dotnet Server",
-                "type": "coreclr",
-                "request": "launch",
-                "program": "${workspaceRoot}\\bin\\Debug\\netcoreapp2.0\\JavascriptDotnetDemo.dll",
-                "args": [],
-                "cwd": "${workspaceRoot}",
-                "console": "internalConsole",
-                "stopAtEntry": false,
-                "internalConsoleOptions": "openOnSessionStart",
-                "env": {
-                    "ASPNETCORE_ENVIRONMENT": "Development"
-                }
-            }           
-        ]
-    }
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Server Rendering",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": [
+                "run", "debug"
+            ],
+            "port": 9229
+        },
+        {
+            "name": "Launch in Chrome",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8080/",
+            "webRoot": "${workspaceRoot}"
+        },
+        {
+            "name": "Launch Dotnet Server",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceRoot}\\bin\\Debug\\netcoreapp2.0\\JavascriptDotnetDemo.dll",
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        }           
+    ]
+}

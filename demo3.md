@@ -96,6 +96,10 @@ Editor: boot-server.tsx
 
 The serverside renderer uses the new renderToNodeStream() function, that efficiently streams the result from React server rendering into a buffer. When it it done, the stream is read into a string and the promise resolves.
 
+We have used a Promise here, but our server compilation does not know that, so we'll have to teach it via tsconfig.json. We'll use a native Promise by specifying es2017 target (meaning typescript will leave it alone):
+
+    "target": "es2017", // because we run this in node 8+
+
 React 16 has a special function to pickup serverside rendered html code and continue clientside, called hydrate(). Like renderToNodeStream, it is also not yet added to the React typings, so we'll declare it inline.
 
 Update boot-client.tsx with the foollowing code:
@@ -120,7 +124,7 @@ Modify webpack.config.ts for hot module reloading according to the docs (https:/
 
         ...
         entry: {
-            'client': ['webpack-hot-middleware/client', './boot-client.tsx']
+            'main-client': ['webpack-hot-middleware/client', './boot-client.tsx']
         },
         ...
         plugins: [
