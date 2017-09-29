@@ -8,9 +8,9 @@ This presentation uses the latest of everything (as of sept 2017), including Rea
 
 This repository has four branches (demo1 to demo4) that build up from nothing to a working AspNet Core 2 site with Javascript Services:
 
-1. [Configure webpack with typescript and create a basic React 16 page](https://github.com/Maarten88/JavascriptDotnetDemo/tree/demo1)
-2. [Configure webpack dev server with hot module reloading (HMR)](https://github.com/Maarten88/JavascriptDotnetDemo/tree/demo2)
-3. [Implement React 16 Universal rendering with HMR using nodejs and express](https://github.com/Maarten88/JavascriptDotnetDemo/tree/demo3)
-4. [Run the React component inside an AspNetCore page using JavascriptServices](https://github.com/Maarten88/JavascriptDotnetDemo/tree/demo4)
+1. [Configure webpack with typescript and create a basic React 16 page](https://github.com/Maarten88/JavascriptDotnetDemo/blob/demo1/demo1.md)
+2. [Configure webpack dev server with hot module reloading (HMR)](https://github.com/Maarten88/JavascriptDotnetDemo/blob/demo2/demo2.md)
+3. [Implement React 16 Universal rendering with HMR using nodejs and express](https://github.com/Maarten88/JavascriptDotnetDemo/blob/demo3/demo3.md)
+4. [Run the React component inside an AspNetCore page using JavascriptServices](https://github.com/Maarten88/JavascriptDotnetDemo/blob/demo4/demo4.md)
 
 Each branch is acompanied by a script file that describes all the steps that were taken to get there from the previous branch.
